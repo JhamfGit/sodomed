@@ -1,0 +1,87 @@
+<article class="">
+    <form [formGroup]="form">
+        <div class="p-fluid p-formgrid grid">
+
+            <div class="field mb-0 col-12 md:col-6">
+                <label htmlFor="typeIdentification">Tipo de identificación</label>
+                <p-dropdown [ngClass]="{'ng-dirty ng-invalid': form.controls['typeIdentification'].errors}"
+                    [options]="typesIds" formControlName="typeIdentification" optionValue="value"
+                    optionLabel="label"  placeholder="Selecciona">
+                </p-dropdown>
+            </div>
+            <div class="field mb-0 col-12 md:col-6">
+                <label htmlFor="identification">Identificación</label>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-id-card"></i>
+                    <input [ngClass]="{'ng-dirty ng-invalid': form.controls['identification'].errors}" pInputText
+                        id="identification" formControlName="identification" aria-describedby="identification" />
+                </span>
+            </div>
+
+            <div class="field mb-0 col-12 md:col-6">
+                <label htmlFor="kinship">Parentesco</label>
+                <p-dropdown [ngClass]="{'ng-dirty ng-invalid': form.controls['kinship'].errors}"
+                    [options]="kinshipOptions" formControlName="kinship" optionValue="value" optionLabel="label"
+                    placeholder="Selecciona"></p-dropdown>
+            </div>
+
+            <div class="field mb-0 col-12 md:col-6">
+                <label htmlFor="name">Nombres</label>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <input [ngClass]="{'ng-dirty ng-invalid': form.controls['name'].errors}" pInputText id="name"
+                        formControlName="name" aria-describedby="name" />
+                </span>
+            </div>
+
+            <div class="field mb-0 col-12 md:col-6">
+                <label htmlFor="lastName">Apellidos</label>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <input [ngClass]="{'ng-dirty ng-invalid': form.controls['lastName'].errors}" pInputText
+                        id="lastName" formControlName="lastName" aria-describedby="lastName" />
+                </span>
+            </div>
+
+            <div class="field mb-0 col-12 md:col-6">
+                <label htmlFor="phone">Teléfono</label>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-phone"></i>
+                    <input [ngClass]="{'ng-dirty ng-invalid': form.controls['phone'].errors}" pInputText id="phone"
+                        formControlName="phone" aria-describedby="phone" />
+                </span>
+            </div>
+
+            <div class="field mb-0 col-12 md:col-6">
+                <label htmlFor="countryDialCode">Código del país</label>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-globe"></i>
+                    <input  
+                    appCountryCodeNumber  placeholder="+57"
+                    [ngClass]="{'ng-dirty ng-invalid': form.controls['countryDialCode'].errors}" pInputText
+                        id="countryDialCode" formControlName="countryDialCode" aria-describedby="countryDialCode" />
+                </span>
+            </div>
+
+            <div class="field mb-0 col-12 md:col-6">
+                <label htmlFor="status">Estado</label>
+                <span class="p-input-icon-left">
+                    <p-selectButton 
+                    [options]="stateOptions" 
+                    formControlName="status" 
+                    optionLabel="label" 
+                    optionValue="value" />
+                </span>
+            </div>
+            <div class="field mb-0 col-12 md:col-12">
+                <label htmlFor="email">Correo electrónico</label>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-envelope"></i>
+                    <input [ngClass]="{'ng-dirty ng-invalid': form.controls['email'].errors}" pInputText id="email"
+                        formControlName="email" aria-describedby="email" />
+                </span>
+            </div>
+        </div>
+    </form>
+ 
+</article>

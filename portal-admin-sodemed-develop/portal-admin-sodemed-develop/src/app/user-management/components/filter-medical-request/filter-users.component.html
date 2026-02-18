@@ -1,0 +1,36 @@
+<article class="filter-medical-request">
+    <form [formGroup]="form">
+        <div class="p-fluid p-formgrid grid">
+          
+            <div class="field mb-0 px-1 col-12 md:col-12 lg:col-3">
+                <label htmlFor="id">Id del Empleado</label>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-id-card"></i>
+                    <input [ngClass]="{'ng-dirty ng-invalid':form.controls['idUser'].errors}" pInputText
+                        id="idUser" formControlName="idUser" aria-describedby="idUser"
+                        placeholder="Id empleado" />
+                </span>
+            </div>
+
+            <div class="field mb-0 px-1 col-12 md:col-12 lg:col-3">
+                <label htmlFor="identification">Identificación</label>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-id-card"></i>
+                    <input [ngClass]="{'ng-dirty ng-invalid':form.controls['identification'].errors}" pInputText
+                        id="identification" formControlName="identification" aria-describedby="identification"
+                        placeholder="Identificación" />
+                </span>
+            </div>
+
+            <!-- tw-flex tw-justify-center tw-items-end tw-gap-1 tw-w-full -->
+            <div class="option__butons col-12 md:col-12 lg:col ">
+                <div class="tw-w-full tw-h-full flex tw-gap-1 justify-content-end tw-items-end flex-column sm:flex-row  md:flex-row  lg:flex-row">
+                    <p-button class="tw-w-full md:tw-w-full" label="Limpiar" icon="pi pi-times" [text]="true"
+                        severity="secondary" (click)="cleanFilters()" />
+                    <p-button class="tw-w-full md:tw-w-full" label="Buscar"
+                        [icon]="loadingSearch ? 'pi pi-spin pi-spinner' : 'pi pi-search'" (click)="searchUsers()" />
+                </div>
+            </div>
+        </div>
+    </form>
+</article>

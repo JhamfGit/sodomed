@@ -1,0 +1,49 @@
+<section>
+    @for (item of movementsMedicalRequest; track item.effDate) {
+    <div>
+        <p class="tw-m-0 tw-flex tw-gap-3">
+            <span class="tw-font-semibold"> {{(item?.effDate | date: FORMAT_DATE )}} <span>-</span></span>
+            <span class="tw-font-semibold"> {{(item?.nameEmployee )}} <span>-</span></span>
+            <span class="tw-font-semibold"> {{(item?.idEmployee )}}</span>
+        </p>
+        <p class="tw-m-0">
+            <span class="tw-font-semibold">
+                {{item?.statusOrder | dictionaryStatusOrder }}
+            </span>
+        </p>
+
+        <p class="tw-m-0">
+            <span>
+                {{item?.observations }}
+            </span>
+        </p>
+        @if(item?.partial){
+        <p class="tw-m-0 tw-flex tw-gap-3">
+            <span class="tw-font-semibold">Envio con pendientes</span>
+        </p>
+        <p class="tw-m-0">
+            <span>
+                Cantidad Pendientes : {{item?.totalPending }}
+            </span>
+        </p>
+        <p class="tw-m-0">
+            <span class="">
+                Detalle Pendientes : {{item?.detailsPending }}
+            </span>
+        </p>
+
+        }
+    </div>
+    <p-divider *ngIf="movementsMedicalRequest.length > 1" align="center" type="solid" />
+    } @empty {
+    <div class="tw-h-full tw-flex tw-justify-center tw-items-center">
+        <div class="tw-text-center">
+            <p class="tw-font-bold tw-text-xl tw-text-stone-600 my-1">No se encontraron resultados.</p>
+            <p class="tw-text-stone-600 my-1">
+                En este momento la solicitud no cuenta con ningún registro de
+                actualización de estado
+            </p>
+        </div>
+    </div>
+    }
+</section>

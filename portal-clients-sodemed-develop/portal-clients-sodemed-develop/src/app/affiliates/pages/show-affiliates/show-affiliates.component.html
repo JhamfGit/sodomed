@@ -1,0 +1,94 @@
+<main class="tw-mb-1">
+    <header>
+        <h2 class="">Beneficiarios</h2>
+    </header>
+    <section class="card tw-p-2 tw-flex tw-flex-col" style="min-height: calc(100vh - 224px);">
+        <app-table-base-styles>
+            <p-table p-table-base [value]="arrayBeneficiary" [scrollable]="true" [scrollHeight]="'400px'"
+                responsiveLayout="stack" [breakpoint]="'960px'" [tableStyle]="{'min-width': '50rem'}">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Tipo Identificación</th>
+                        <th>Identificación</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Teléfono</th>
+                        <th>Código País</th>
+                        <th>Email</th>
+                        <th>Parentesco</th>
+                        <th>Estado</th>
+                        <th>
+                            <i class="pi pi-cog tw-text-lg"></i>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-beneficiary> 
+                    <tr>
+                        <td>{{ beneficiary.typeIdentification }} </td>
+                        <td>{{ beneficiary.identification }}</td>
+                        <td>{{ beneficiary.name }}</td>
+                        <td>{{ beneficiary.lastName }}</td>
+                        <td>{{ beneficiary.phone }}</td>
+                        <td>{{ beneficiary.countryDialCode }}</td>
+                        <td>{{ beneficiary.email }}</td>
+                        <td>{{ beneficiary.kinship | translateKinship}}</td>
+                        <td>
+                            <span
+                                class="status_user {{beneficiary?.status}} tw-inline-block tw-rounded-full tw-py-1 tw-px-4 tw-min-w-full">
+                                {{ beneficiary.status | translateStatusUser}}
+                            </span>
+                        </td>
+                        <td>
+                            <span>
+                              <p-button label="Editar" 
+                                styleClass="tw-w-full"
+                                icon="pi pi-spin pi-edit" 
+                                [outlined]="true"
+                                (click)="editBeneficiary(beneficiary)" />
+                            </span>
+
+                            <span>
+                                <p-button label="Eliminar" 
+                                  styleClass="tw-w-full"
+                                  icon="pi pi-spin pi-edit" 
+                                  [outlined]="true"
+                                  (click)="deleteBeneficiary(beneficiary)" />
+                              </span>
+                          </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </app-table-base-styles>
+        @if (arrayBeneficiary.length === 0) {
+        <div class="tw-h-full tw-flex-grow tw-flex tw-justify-center tw-items-center">
+            <div class="tw-text-center">
+                <p class="tw-font-bold tw-text-2xl tw-text-stone-600 my-1">No se encontraron resultados.</p>
+                <p class="tw-text-stone-600 my-1">En este momento no cuenta con ningun beneficiario registrado</p>
+            </div>
+        </div>
+        }
+    </section>
+</main>
+
+@if(currentBeneficiary){
+<p-dialog header="Editar Beneficiario" [(visible)]="showEditBeneficiary" [modal]="true"
+    [breakpoints]="{ '1199px': '70%', '700px': '90%' }" [style]="{ width: '60%' }" [draggable]="false"
+    [resizable]="false">
+    <div class="tw-min-h-24">
+            <app-edit-beneficiary  #edit_beneficiary [beneficiary]="currentBeneficiary" />
+        </div>
+        <ng-template pTemplate="footer">
+            <section class="option__butons tw-flex tw-justify-center  tw-gap-3 tw-mt-1">
+                <div class="tw-w-full">
+                    <p-button styleClass="tw-w-full" label="Cerrar" [text]="true" severity="secondary"
+                    (click)="showEditBeneficiary = false" />
+                </div>
+                <div class="tw-w-full">
+                    <p-button  styleClass="tw-w-full" label="Guardar" (click)="saveBeneficiary(edit_beneficiary.formRaw)"
+                    [icon]="loadingUpdateBeneficiary ? 'pi pi-spin pi-spinner' : ''" />
+                </div>
+            </section>
+        </ng-template>
+    </p-dialog>
+}
+    

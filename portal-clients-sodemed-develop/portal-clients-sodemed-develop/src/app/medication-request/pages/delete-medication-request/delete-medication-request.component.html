@@ -1,0 +1,56 @@
+<main class="tw-mb-1">
+    <header>
+        <h2 class="">Eliminar Solicitudes</h2>
+    </header>
+    <section class="card tw-p-2 tw-flex tw-flex-col" style="min-height: calc(100vh - 224px);">
+        <app-table-base-styles>
+            <p-table p-table-base [value]="reponseOrderToDelete" [scrollable]="true" [scrollHeight]="'400px'"
+                responsiveLayout="stack" [breakpoint]="'960px'" [tableStyle]="{'min-width': '50rem'}">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>ID</th>
+                        <th>Identificación</th>
+                        <th>Nombre</th>
+                        <th>Fecha de creación</th>
+                        <th>Estado</th>
+                        <th>
+                            <i class="pi pi-cog tw-text-lg"></i>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-order> 
+                    <tr>
+                        <td>{{ order.id }} </td>
+                        <td>{{ order.userOrderIdentification }}</td>
+                        <td>{{ order.userOrderName }}</td>
+                        <td>{{ order.creationDate  | date :'medium'}}</td>
+                        <td>
+                            <span
+                                class="status__order {{order?.statusOrder}} tw-inline-block tw-rounded-full tw-py-3 tw-px-4 tw-min-w-full"
+                                [ngStyle]="order?.statusOrder | getStylesStatusOrder"
+                                >
+                                {{ order.statusOrder | dictionaryStatusOrder }}
+                            </span>
+                        </td>
+                        <td>
+                            <span>
+                              <p-button label="Eliminar" 
+                                [icon]="loadingDelete ? 'pi pi-spin pi-spinner' : 'pi pi-delete'" 
+                                [outlined]="true"
+                                (click)="alertMsgMedicalRequest(order)" />
+                            </span>
+                          </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </app-table-base-styles>
+        @if (reponseOrderToDelete.length === 0) {
+        <div class="tw-h-full tw-flex-grow tw-flex tw-justify-center tw-items-center">
+            <div class="tw-text-center">
+                <p class="tw-font-bold tw-text-2xl tw-text-stone-600 my-1">No se encontraron resultados.</p>
+                <p class="tw-text-stone-600 my-1">En este momento no cuenta con ninguna orden para eliminar</p>
+            </div>
+        </div>
+        }
+    </section>
+</main>

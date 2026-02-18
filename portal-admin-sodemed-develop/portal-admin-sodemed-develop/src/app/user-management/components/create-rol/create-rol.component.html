@@ -1,0 +1,69 @@
+<article class="">
+    <form [formGroup]="form">
+        <div class="p-fluid p-formgrid grid">
+            <div class="field mb-0 col-12 md:col-6">
+                <label htmlFor="code">Código Rol</label>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-id-card"></i>
+                    <input pInputText id="code"[placeholder]="'admin'" formControlName="code" aria-describedby="code" />
+                </span>
+            </div>
+
+            <div class="field mb-0 col-12 md:col-6">
+                <label htmlFor="name">Nombre</label>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <input [ngClass]="{'ng-dirty ng-invalid': form.controls['name'].errors}" pInputText id="name"
+                        formControlName="name" aria-describedby="name" placeholder="Nombre"/>
+                </span>
+            </div>
+
+            <div class="field mb-0 col-12 md:col-6">
+                <label htmlFor="status">Estado</label>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                    <p-selectButton 
+                    [options]="stateOptions" 
+                    formControlName="status" 
+                    optionLabel="label" 
+                    optionValue="value" />
+                </span>
+            </div>
+
+            <div class="field mb-0  col-12">
+                <label htmlFor="description">Descripción</label>
+                <textarea class="!tw-h-20 !tw-overflow-y-auto !tw-max-h-20"
+                  [ngClass]="{'ng-dirty ng-invalid':form.controls['description'].errors}" pInputTextarea
+                  formControlName="description" [autoResize]="true">
+              </textarea>
+              </div>
+
+            <div class="field mb-0 col-12">
+                <label htmlFor="permissions">Configuración de permisos</label>
+                <span class="p-input-icon-left">
+                    <p-pickList 
+                    [source]="arrayPermissions" 
+                    [target]="targetPermissions" 
+                    sourceHeader="Disponibles" 
+                    targetHeader="Seleccionados" 
+                    [dragdrop]="true" 
+                    [responsive]="true" 
+                    [sourceStyle]="{ height: '4rem' }"
+                    [targetStyle]="{ height: '4rem' }" 
+                    breakpoint="700px"
+                    [responsive]="true"
+                    [showTargetControls]="false"
+                    [showSourceControls]="false"
+                    (onMoveToTarget)="onMoveToTarget()"
+                    (onMoveToSource)="onMoveToSource()"
+                    >
+                    <ng-template let-permi pTemplate="item">
+                        <span>{{ permi }}</span>
+                    </ng-template>
+                </p-pickList>
+                </span>
+            </div>
+
+        </div>
+    </form>
+</article>

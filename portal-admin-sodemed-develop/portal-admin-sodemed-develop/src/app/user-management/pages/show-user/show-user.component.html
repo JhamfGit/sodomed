@@ -1,0 +1,80 @@
+<main class="tw-mb-1">
+    <header>
+        <h2 class="">Usuarios del sistema</h2>
+    </header>
+    <section class="card tw-p-2  tw-flex-col">
+        <app-filter-users [loadingSearch]="loadingskeleton" (onSearch)="searchResults($event)"
+            (onCleanFilter)="cleanFilter()" />
+    </section>
+    <section class="card tw-p-2 tw-flex tw-flex-col" style="min-height: calc(100vh - 224px);">
+        <app-table-base-styles>
+            <p-table p-table-base [value]="arrayUserEmployee" [scrollable]="true" [scrollHeight]="'400px'"
+                responsiveLayout="stack" [breakpoint]="'960px'" [tableStyle]="{'min-width': '50rem'}">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Id User</th>
+                        <th>Tipo Identificación</th>
+                        <th>Identificación</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Nombre Rol</th>
+                        <th>Id Rol</th>
+                        <th>Teléfono</th>
+                        <th>Código País</th>
+                        <th>Email</th>
+                        <th>Estado</th>
+                        <th>Inactivar</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-userEmployee>
+                    <tr>
+                        <td>{{ userEmployee.id }} </td>
+                        <td>{{ userEmployee.typeIdentification }} </td>
+                        <td>{{ userEmployee.identification }}</td>
+                        <td>{{ userEmployee.name }}</td>
+                        <td>{{ userEmployee.lastName }}</td>
+                        <td>{{ userEmployee.role.name }}</td>
+                        <td>{{ userEmployee.role.id }}</td>
+                        <td>{{ userEmployee.phone }}</td>
+                        <td>{{ userEmployee.countryDialCode }}</td>
+                        <td>{{ userEmployee.email }}</td>
+                        <td>
+                            <span
+                                class="status_user {{userEmployee?.status}} tw-inline-block tw-rounded-full tw-py-1 tw-px-4 tw-min-w-full">
+                                {{ userEmployee.status | translateStatusUser}}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="tw-w-full"
+                                *ngIf="userEmployee.status ===enumStatusUser.Active && (dataUserInSession?.id !== userEmployee?.id)">
+                                <p-button class="tw-w-full" label="Inactivar" [outlined]="true"
+                                    (click)="inactiveEmployee(userEmployee)" />
+                            </span>
+                            <span class="tw-w-full"
+                                *ngIf="userEmployee.status ===enumStatusUser.Inactive && (dataUserInSession?.id !== userEmployee?.id)">
+                                <p-button class="tw-w-full" label="Activar" [outlined]="true"
+                                    (click)="activeEmployee(userEmployee)" />
+                            </span>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </app-table-base-styles>
+        @if (arrayUserEmployee.length === 0) {
+        <div class="tw-h-full tw-flex-grow tw-flex tw-justify-center tw-items-center">
+            <div class="tw-text-center">
+                <p class="tw-font-bold tw-text-2xl tw-text-stone-600 my-1">No se encontraron resultados.</p>
+                <p class="tw-text-stone-600 my-1">En este momento no cuenta con ningun usuario registrado</p>
+            </div>
+        </div>
+        }
+    </section>
+    @if (arrayUserEmployee.length > 0 && paginator.totalPages > 1) {
+    <section class="section__paginator">
+        <div class="tw-flex tw-justify-center">
+            <p-paginator (onPageChange)="onPageChange1($event)" [first]="paginator.page-1" [rows]="paginator.row"
+                [totalRecords]="paginator.totalRecords" [showFirstLastIcon]="false" />
+        </div>
+    </section>
+    }
+</main>

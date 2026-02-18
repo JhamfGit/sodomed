@@ -1,0 +1,37 @@
+.status__order {
+    white-space: nowrap;
+
+    &.pending {
+        font-weight: bold;
+        color: white !important;
+    }
+
+    &.processing {
+        font-weight: bold;
+        color: white !important;
+    }
+
+    &.accept {
+        font-weight: bold;
+        color: white !important;
+    }
+
+    &.send {
+        font-weight: bold;
+        color: white !important;
+    }
+
+    &.reject {
+        font-weight: bold;
+        color: white !important;
+    }
+
+    &.delivered {
+        font-weight: bold;
+        color: white !important;
+    }
+}
+
+.zIndexError {
+    z-index: 1102;
+}

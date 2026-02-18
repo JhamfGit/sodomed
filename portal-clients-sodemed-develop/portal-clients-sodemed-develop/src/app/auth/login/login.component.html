@@ -1,0 +1,67 @@
+<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+    <div class=" tw-w-11/12 md:tw-w-8/12 lg:tw-w-[500px]  flex flex-column align-items-center justify-content-center">
+        <div class="tw-w-full"
+            style="border-radius: 22px;padding: 0.1rem;background: linear-gradient(356deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+            <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:20px">
+                <div class="text-center mb-5">
+                    <span class="text-600 font-medium">Por Favor Inicie Sesión</span>
+                </div>
+                <div class="tw-min-w-full md:tw-min-w-96 lg:tw-min-w-96">
+                    <form [formGroup]="form">
+                        <div class="mb-5">
+                            <label for="typeIdentification" class="block text-900 text-xl font-medium mb-2">Tipo de
+                                identificación</label>
+                            <p-dropdown [ngClass]="{'ng-dirty ng-invalid': form.controls['typeIdentification'].errors}"
+                                [options]="typesIds" inputId="typeIdentification" formControlName="typeIdentification"
+                                optionValue="value" optionLabel="label" placeholder="Selecciona"
+                                styleClass="tw-w-full tw-p-1">
+                            </p-dropdown>
+                        </div>
+                        <label for="identification" class="block text-900 text-xl font-medium mb-2">
+                            Identificación
+                        </label>
+                        <input id="identification" type="text" placeholder="Identificacion" pInputText
+                            class="w-full mb-5" style="padding:1rem" formControlName="identification">
+                        <label for="password" class="block text-900 font-medium text-xl mb-2">
+                            Contraseña
+                        </label>
+                        <p-password formControlName="password" placeholder="Contraseña" [feedback]="false" id="password"
+                            [toggleMask]="true" styleClass="w-full mb-5" inputStyleClass="w-full p-3"
+                            inputId="password">
+                        </p-password>
+                        <button pButton pRipple class="w-full tw-flex tw-justify-center  p-3 text-xl"
+                            (click)="sendLogin()" [disabled]="!form.valid">
+                            @if(loadingLogin){
+                            <i class="pi pi-spin pi-spinner"></i>
+                            }@else {
+                            <span class="ml-2 font-bold">Iniciar Sesión</span>
+                            }
+                        </button>
+
+                        <div class="tw-flex tw-justify-center tw-items-center   tw-mt-5 ">
+                            <a class="tw-text-2xl  tw-underline " [routerLink]="'/auth/register-client'">Registrarse</a>
+                        </div>
+                        <p-divider align="center" type="solid">
+                            <b>O</b>
+                        </p-divider>
+                        <div class="tw-flex tw-justify-center tw-items-center   tw-mt-5 ">
+                            <p-button label="Olvide mi Contraseña" [text]="true" severity="secondary"
+                                (click)="initProcessRecoreryPassword()" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<p-dialog header="Cambio de Contraseña" [(visible)]="showRecoveryPassword" [modal]="true"
+    [breakpoints]="{ '1199px': '70%', '700px': '90%' }" [style]="{ width: '30%' }" [draggable]="false"
+    [resizable]="false">
+    <div class="tw-min-h-24">
+        <app-recorevey-password [loading]="loadingRecoveryPassword" (onClosedModal)="showRecoveryPassword =false;"
+            (onRequestChange)="onRequestChange($event)" />
+    </div>
+</p-dialog>

@@ -1,0 +1,13 @@
+<div class="tw-w-full tw-h-full">
+    <ng-content class="" select="[content-upload]"></ng-content>
+</div>
+
+<p-fileUpload #fileUpload mode="basic" [ngStyle]="{'display': 'none'}" [accept]="fileAccept" [customUpload]="true"
+    [disabled]="disabled" [maxFileSize]="maxFileSize" nvalidFileLimitMessageDetail="El límite es {0} como máximo."
+    invalidFileLimitMessageSummary="Maximo numero de archivos excedido "
+    invalidFileSizeMessageDetail="El tamaño máximo de carga es {0}."
+    invalidFileSizeMessageSummary=" {0}: Tamaño de archivo no válido"
+    invalidFileTypeMessageDetail="tipos de archivos permitidos : {0}."
+    invalidFileTypeMessageSummary="{0}: Tipo de archivo no válido" chooseLabel="Subir Archivo"
+    (onSelect)="onSelect($event)">
+</p-fileUpload>

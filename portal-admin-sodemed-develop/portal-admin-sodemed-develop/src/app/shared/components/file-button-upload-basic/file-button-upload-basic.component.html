@@ -1,0 +1,9 @@
+<div class="tw-w-full tw-h-full">
+    <ng-content class="" select="[content-upload]"></ng-content>
+</div>
+
+<p-fileUpload #fileUpload mode="basic" [ngStyle]="{'display': 'none'}" [accept]="fileAccept" [customUpload]="true"
+    [disabled]="disabled" [maxFileSize]="maxFileSize" (uploadHandler)="onBasicUploadAuto($event)"
+    (onError)="onErrorUpload($event)" [auto]="true" invalidFileLimitMessageDetail="El archivo supera el tamaño limite"
+    chooseLabel="Subir Archivo">
+</p-fileUpload>

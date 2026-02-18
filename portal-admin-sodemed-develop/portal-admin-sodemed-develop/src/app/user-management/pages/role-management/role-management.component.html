@@ -1,0 +1,102 @@
+<main class="tw-mb-1">
+    <header>
+        <h2 class="">Administracion de roles</h2>
+    </header>
+    <section class="tw-flex tw-justify-end tw-my-2">
+        <!-- <div> -->
+            <p-button  label="Crear"  [outlined]="true" (click)="showCreateRol()" icon='pi pi-file-plus' />
+        <!-- </div> -->
+    </section>
+    <section class="card tw-p-2 tw-flex tw-flex-col" style="min-height: calc(100vh - 224px);">
+        <app-table-base-styles>
+            <p-table p-table-base [value]="arrayRoleEmployee" [scrollable]="true"
+                responsiveLayout="stack" [breakpoint]="'960px'" [tableStyle]="{'min-width': '50rem'}">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Id Rol</th>
+                        <th>Nombre</th>
+                        <th>Código</th>
+                        <th>Estado</th>
+                        <th>
+                            <i class="pi pi-cog tw-text-lg"></i>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-role>
+                    <tr>
+                        <td>{{ role.id }} </td>
+                        <td>{{ role.name }} </td>
+                        <td>{{ role.code }}</td>
+
+                        <td>
+                            <span
+                                class="status_role {{role?.status}} tw-inline-block tw-rounded-full tw-py-1 tw-px-4 tw-min-w-full">
+                                {{ role.status | translateStatusUser}}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="tw-w-full">
+                                <p-button class="tw-w-full" styleClass="'tw-w-full'" label="Administrar"
+                                    [outlined]="true" (click)="adminRole(role)" />
+                            </span>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+        </app-table-base-styles>
+        @if (arrayRoleEmployee.length === 0) {
+        <div class="tw-h-full tw-flex-grow tw-flex tw-justify-center tw-items-center">
+            <div class="tw-text-center">
+                <p class="tw-font-bold tw-text-2xl tw-text-stone-600 my-1">No se encontraron resultados.</p>
+                <p class="tw-text-stone-600 my-1">En este momento no cuenta con ningun rol registrado</p>
+            </div>
+        </div>
+        }
+    </section>
+</main>
+
+@if (enableEditRole) {
+    <p-dialog header="Gestionar Rol" [(visible)]="enableEditRole" [modal]="true"
+    [breakpoints]="{ '1199px': '70%', '700px': '90%' }" [style]="{ width: '60%' }" [draggable]="false"
+    [resizable]="false">
+    <div class="tw-min-h-24">
+        <app-edit-role [arrayPermissions]="arrayPermissions" #edit_role_employee [role]="currentRole" />
+    </div>
+    <ng-template pTemplate="footer">
+        <section class="option__butons tw-flex tw-justify-center  tw-gap-3 tw-mt-1">
+            <div class="tw-w-full">
+                <p-button styleClass="tw-w-full" label="Cerrar" [text]="true" severity="secondary"
+                (click)="enableEditRole = false" />
+            </div>
+            <div class="tw-w-full">
+                <p-button  styleClass="tw-w-full" label="Guardar" (click)="save(edit_role_employee.formRaw)"
+                [icon]="loadingUpdateRole ? 'pi pi-spin pi-spinner' : ''" />
+            </div>
+        </section>
+    </ng-template>
+</p-dialog>
+}
+
+<!-- Crear rol -->
+@if (showDialogCreate) {
+
+<p-dialog header="Crear Rol" [(visible)]="showDialogCreate" [modal]="true"
+    [breakpoints]="{ '1199px': '70%', '700px': '90%' }" [style]="{ width: '60%' }" [draggable]="false"
+    [resizable]="false">
+    <div class="tw-min-h-24">
+        <app-create-role [arrayPermissions]="arrayPermissions" #create_rol/>
+    </div>
+    <ng-template pTemplate="footer">
+        <section class="option__butons tw-flex tw-justify-center  tw-gap-3 tw-mt-1">
+            <div class="tw-w-full">
+                <p-button  styleClass="tw-w-full" label="Cerrar" [text]="true" severity="secondary"
+                    (click)="showDialogCreate = false" />
+            </div>
+            <div class="tw-w-full">
+                <p-button [disabled]="!create_rol.validForm" styleClass="tw-w-full" label="Crear" (click)="processCreate(create_rol.formRaw,create_rol.validForm)"
+                    [icon]="loadingUpdateRole ? 'pi pi-spin pi-spinner' : ''" />
+            </div>
+        </section>
+    </ng-template>
+</p-dialog>
+}

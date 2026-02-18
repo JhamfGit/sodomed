@@ -1,0 +1,12 @@
+.status_role{
+  &.active{
+      background-color: #67d287;
+      font-weight: bold;
+      color: white;
+  }
+  &.inactive{
+      background-color: #333;
+      font-weight: bold;
+      color: white;
+  }
+}

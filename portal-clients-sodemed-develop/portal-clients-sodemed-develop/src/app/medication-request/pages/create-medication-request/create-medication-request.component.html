@@ -1,0 +1,109 @@
+<main class="tw-mb-1">
+    <header>
+        <h2 class="">Creación de solicitudes</h2>
+    </header>
+    <article class="card ">
+        <form [formGroup]="form">
+            <div class="p-fluid p-formgrid grid">
+                <div class="field mb-0  col-12 md:col-6">
+                    <label htmlFor="state">Afiliado</label>
+                    <p-dropdown [ngClass]="{'ng-dirty ng-invalid':form.controls['whoAffiliate'].errors}"
+                        [loading]="loadingAfiliate" [options]="optionTypeAffiliate" formControlName="whoAffiliate"
+                        optionLabel="label" optionValue="value" [group]="true" placeholder="Selecccione ">
+                        <ng-template let-group pTemplate="group">
+                            <div class="flex align-items-center">
+                                <span>{{ group.label }}</span>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="field mb-0 col-12 md:col-6">
+                    <label htmlFor="firstname2">Documento de identidad</label>
+                    <app-file-button-upload-basic #fileDocumentIdentity [fileAccept]="fileAccept"
+                        [maxFileSize]="maxFileSize" invalidFileSizeMessageSummary="Error de tamaño: "
+                        invalidFileSizeMessageDetail="El archivo no debe exceder 2 MB"
+                        (onEmittPlainFile)="uploadDoc($event,enumUploadDoc.docIndentity)">
+                        <p-inputGroup content-upload>
+                            <button (click)="fileDocumentIdentity.getFileDestock()" type="button" pButton
+                                label="Selecccione archivo"></button>
+                            <input class="tw-pointer-events-none" type="text" pInputText
+                                placeholder="Documento de identidad" [value]="fileDocumentIdentity.getNamePlainFile" />
+                        </p-inputGroup>
+                    </app-file-button-upload-basic>
+                </div>
+                <div class="field mb-0  col-12 md:col-6">
+                    <label htmlFor="firstname2">Orden de medicamentos</label>
+                    <app-file-button-upload-basic #filemedicOrder [fileAccept]="fileAccept" [maxFileSize]="maxFileSize"
+                        (onEmittPlainFile)="uploadDoc($event,enumUploadDoc.docMedicalOrder)">
+                        <p-inputGroup content-upload>
+                            <button (click)="filemedicOrder.getFileDestock()" type="button" pButton
+                                label="Selecccione archivo"></button>
+                            <input class="tw-pointer-events-none" type="text" pInputText
+                                placeholder="Orden de medicamentos" [value]="filemedicOrder.getNamePlainFile" />
+                        </p-inputGroup>
+                    </app-file-button-upload-basic>
+                </div>
+                <div class="field mb-0  col-12 md:col-6">
+                    <label htmlFor="firstname2">Historia Clinica</label>
+                    <app-file-button-upload-basic #fileClinicalHsitory [fileAccept]="fileAccept"
+                        [maxFileSize]="maxFileSize"
+                        (onEmittPlainFile)="uploadDoc($event,enumUploadDoc.docClinicalHistory)"
+                        (onEmittErrorUpload)="errorUpload($event)">
+                        <p-inputGroup content-upload>
+                            <button (click)="fileClinicalHsitory.getFileDestock()" type="button" pButton
+                                label="Selecccione archivo"></button>
+                            <input class="tw-pointer-events-none" type="text" pInputText placeholder="Historia Clinica"
+                                [value]="fileClinicalHsitory.getNamePlainFile" />
+                        </p-inputGroup>
+                    </app-file-button-upload-basic>
+                </div>
+
+                <div class="field mb-0  col-12 md:col-6">
+                    <label htmlFor="homeCity">Cuidad de domicilio</label>
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-map-marker"></i>
+                        <input [ngClass]="{'ng-dirty ng-invalid':form.controls['homeCity'].errors}" pInputText
+                            id="homeCity" formControlName="homeCity" aria-describedby="homeCity" />
+                    </span>
+                </div>
+
+                <div class="field mb-0  col-12 md:col-6">
+                    <label htmlFor="homeAddress">Dirección de domicilio</label>
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-warehouse"></i>
+                        <input [ngClass]="{'ng-dirty ng-invalid':form.controls['homeAddress'].errors}" pInputText
+                            id="homeAddress" formControlName="homeAddress" aria-describedby="homeAddress" />
+                    </span>
+                </div>
+                <div class="field mb-0  col-12 md:col-6">
+                    <label htmlFor="district">Barrio</label>
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-map-marker"></i>
+                        <input [ngClass]="{'ng-dirty ng-invalid':form.controls['district'].errors}" pInputText
+                            id="district" formControlName="district" aria-describedby="district" />
+                    </span>
+                </div>
+                <div class="field mb-0  col-12 md:col-6">
+                    <label htmlFor="furtherDirectionIndication">Indicaciones extras de domicilio</label>
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-warehouse"></i>
+                        <input [ngClass]="{'ng-dirty ng-invalid':form.controls['furtherDirectionIndication'].errors}"
+                            pInputText id="furtherDirectionIndication" formControlName="furtherDirectionIndication"
+                            aria-describedby="furtherDirectionIndication" />
+                    </span>
+                </div>
+                <div class="field mb-0  col-12">
+                    <label htmlFor="comments">Observaciones</label>
+                    <textarea [ngClass]="{'ng-dirty ng-invalid':form.controls['comments'].errors}" rows="5" cols="30"
+                        pInputTextarea formControlName="comments" [autoResize]="true">
+            </textarea>
+                </div>
+
+            </div>
+        </form>
+        <div class="option__butons tw-flex tw-justify-end  tw-gap-3 tw-mt-1">
+            <p-button label="Cancelar" [text]="true" severity="secondary" (click)="cancelSolicitud()" />
+            <p-button [disabled]="!(form.valid && isfiles)" [icon]="loadingCharge ? 'pi pi-spin pi-spinner' : ''"  label="Crear Solicitud" (click)="sendRequest()" />
+        </div>
+    </article>
+</main>

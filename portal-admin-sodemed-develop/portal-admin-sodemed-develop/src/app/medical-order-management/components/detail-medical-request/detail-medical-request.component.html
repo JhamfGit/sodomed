@@ -1,0 +1,252 @@
+<article class="">
+  <div class="">
+    <p-divider align="center" type="solid">
+      <b>Información del cliente</b>
+    </p-divider>
+    <div class="p-fluid p-formgrid grid">
+      <div class="field py-1 px-3 mb-0  col-12 md:col-12">
+        <label htmlFor="userOrderName">Nombres solicitante</label>
+        <span class="p-input-icon-left">
+          <i class="color_text_detail--input pi pi-user"></i>
+          <input class="color_text_detail--input" pInputText id="userOrderName" [disabled]="true"
+            [value]="medicalRequestDetails?.userOrderName" aria-describedby="userOrderName" />
+        </span>
+      </div>
+      <div class="field py-1 px-3 mb-0  col-12 md:col-6">
+        <label htmlFor="userOrderIdentification">Identificación</label>
+        <span class="p-input-icon-left">
+          <i class="color_text_detail--input pi pi-id-card"></i>
+          <input class="color_text_detail--input" pInputText id="userOrderIdentification" [disabled]="true"
+            [value]="medicalRequestDetails?.userOrderIdentification" aria-describedby="userOrderIdentification" />
+        </span>
+      </div>
+
+      <div class="field py-1 px-3 mb-0  col-12 md:col-6">
+        <label htmlFor="typeClient">Tipo de cliente</label>
+        <span class="p-input-icon-left">
+          <i class="color_text_detail--input pi pi-user"></i>
+          <input class="color_text_detail--input" pInputText id="typeClient" [disabled]="true"
+            [value]="(medicalRequestDetails?.typeClient | dictionaryTypeClient)" aria-describedby="typeClient" />
+        </span>
+      </div>
+    </div>
+
+    <!-- informacion solicitud -->
+    <p-divider align="center" type="solid">
+      <b>Información del la Solicitud</b>
+    </p-divider>
+    <div class="p-fluid p-formgrid grid">
+      <div class="field py-1 px-3 mb-0  col-12 md:col-4">
+        <label htmlFor="id">Id solicitud</label>
+        <span class="p-input-icon-left">
+          <i class="color_text_detail--input pi pi-id-card"></i>
+          <input class="color_text_detail--input" pInputText id="id" [disabled]="true"
+            [value]="medicalRequestDetails?.id" aria-describedby="id" />
+        </span>
+      </div>
+
+      <div class="field py-1 px-3 mb-0  col-12 md:col-4">
+        <label htmlFor="creationDate">Fecha de creación</label>
+        <span class="p-input-icon-left">
+          <i class="color_text_detail--input pi pi-calendar"></i>
+          <input class="color_text_detail--input" pInputText id="creationDate" [disabled]="true"
+            [value]="(medicalRequestDetails?.creationDate | date: FORMAT_DATE)" aria-describedby="creationDate" />
+        </span>
+      </div>
+
+      <div class="field py-1 px-3 mb-0  col-12 md:col-4">
+        <label htmlFor="statusOrder">Estado solicitud</label>
+        <span class="p-input-icon-left">
+          <i class="color_text_detail--input pi pi-th-large"></i>
+          <input class="color_text_detail--input tw-font-bold"
+            [ngStyle]="{'color': (medicalRequestDetails?.statusOrder | orderStatusColor)}" pInputText id="statusOrder"
+            [disabled]="true" [value]="(medicalRequestDetails?.statusOrder | dictionaryStatusOrder)"
+            aria-describedby="statusOrder" />
+        </span>
+      </div>
+      <div class="field py-1 px-3 mb-0  col-12 md:col-4">
+        <label htmlFor="statusOrder">Doc. Orden Medica</label>
+        <div class="tw-flex tw-justify-start tw-items-center tw-gap-2">
+          <i class="color_text_detail--input pi pi-eye tw-cursor-pointer !tw-text-blue-600"
+            (click)="showDoc(medicalRequestDetails.urlMedicationOrderFile, medicalRequestDetails.urlFiles)">
+          </i>
+
+          <span class="tw-text-blue-600 tw-underline tw-cursor-pointer"
+            (click)="showDoc(medicalRequestDetails.urlMedicationOrderFile, medicalRequestDetails.urlFiles)">
+            Orden medica
+          </span>
+        </div>
+      </div>
+      <div class="field py-1 px-3 mb-0  col-12 md:col-4">
+        <label htmlFor="statusOrder">Doc. idenficicacion </label>
+        <div class="tw-flex tw-justify-start tw-items-center tw-gap-2">
+          <i class=" color_text_detail--input pi pi-eye tw-cursor-pointer !tw-text-blue-600"
+            (click)="showDoc(medicalRequestDetails.urlIdentificationFile, medicalRequestDetails.urlFiles)">
+          </i>
+          <span class="tw-text-blue-600 tw-underline tw-cursor-pointer"
+            (click)="showDoc(medicalRequestDetails.urlIdentificationFile, medicalRequestDetails.urlFiles)">
+            Identificación
+          </span>
+        </div>
+      </div>
+
+      <div class="field py-1 px-3 mb-0  col-12 md:col-4">
+        <label htmlFor="statusOrder">Doc. historia clinica </label>
+        <div class="tw-flex tw-justify-start tw-items-center tw-gap-2">
+          <i class="!tw-text-blue-600 color_text_detail--input pi pi-eye tw-cursor-pointer"
+            (click)="showDoc(medicalRequestDetails.urlMedicalHistoryFile, medicalRequestDetails.urlFiles)">
+          </i>
+          <p class="tw-text-blue-600 tw-underline tw-cursor-pointer"
+            (click)="showDoc(medicalRequestDetails.urlMedicalHistoryFile, medicalRequestDetails.urlFiles)">
+            Historia clinica
+          </p>
+        </div>
+      </div>
+      <div class="field pt-3 pb-1 px-3 mb-0  col-12">
+        <app-base-accordion-tap>
+          <p-accordion p-accordionTab-base>
+            <p-accordionTab header="Observaciones  del Cliente">
+              <p>
+                {{medicalRequestDetails?.comments}}
+              </p>
+            </p-accordionTab>
+          </p-accordion>
+        </app-base-accordion-tap>
+      </div>
+    </div>
+    <!--  -->
+    <p-divider align="center" type="solid">
+      <b>Información del Domicilio</b>
+    </p-divider>
+    <div class="p-fluid p-formgrid grid">
+      <div class="field py-1 px-3 mb-0  col-12 md:col-6">
+        <label htmlFor="homeCity">Cuidad de domicilio</label>
+        <span class="p-input-icon-left">
+          <i class="color_text_detail--input pi pi-map-marker"></i>
+          <input class="color_text_detail--input" pInputText id="homeCity" [disabled]="true"
+            [value]="medicalRequestDetails?.homeCity" aria-describedby="homeCity" />
+        </span>
+      </div>
+      <div class="field py-1 px-3 mb-0  col-12 md:col-6">
+        <label htmlFor="homeAddress">Dirección de domicilio</label>
+        <span class="p-input-icon-left">
+          <i class="color_text_detail--input pi pi-warehouse"></i>
+          <input class="color_text_detail--input" pInputText id="homeAddress" [disabled]="true"
+            [value]="medicalRequestDetails?.homeAddress" aria-describedby="homeAddress" />
+        </span>
+      </div>
+      <div class="field py-1 px-3 mb-0  col-12 md:col-6">
+        <label htmlFor="district">Barrio</label>
+        <span class="p-input-icon-left">
+          <i class="color_text_detail--input pi pi-map-marker"></i>
+          <input class="color_text_detail--input" pInputText id="district" [disabled]="true"
+            [value]="medicalRequestDetails?.district" aria-describedby="district" />
+        </span>
+      </div>
+      <div class="field py-1 px-3 mb-0  col-12 md:col-6">
+        <label htmlFor="furtherDirectionIndication">Indicaciones extras de domicilio</label>
+        <span class="p-input-icon-left">
+          <i class="color_text_detail--input pi pi-warehouse"></i>
+          <input class="color_text_detail--input" pInputText id="furtherDirectionIndication" [disabled]="true"
+            [value]="medicalRequestDetails?.furtherDirectionIndication" aria-describedby="furtherDirectionIndication" />
+        </span>
+      </div>
+    </div>
+
+    <p-divider align="center" type="solid">
+      <b>Historial de cambios de estado de la solicitud</b>
+    </p-divider>
+    <div class="p-fluid p-formgrid grid">
+      <div class="field pt-3 pb-1 px-3 mb-0  col-12">
+        <app-base-accordion-tap>
+          <p-accordion p-accordionTab-base>
+            <p-accordionTab header="Historial de Cambios">
+              <app-movement-details [movementsMedicalRequest]="movementsMedicalRequest" />
+            </p-accordionTab>
+          </p-accordion>
+        </app-base-accordion-tap>
+      </div>
+    </div>
+  </div>
+</article>
+
+<p-dialog header="Gestión de la Solicitud" [(visible)]="showDialogSetUpManagement" [modal]="true"
+  [breakpoints]="{ '1199px': '90%', '575px': '100%' }" [style]="{ width: '90%' }" [draggable]="false"
+  [resizable]="false" (onHide)="hidenDialogManagement()">
+  <article class="tw-m-h-72">
+    <section>
+      <form [formGroup]="form">
+        <div class="p-fluid p-formgrid grid">
+          <div class="field mb-0 col-12 md:col-12">
+            <label htmlFor="stateOrderByAdmin">Estado de la orden</label>
+            <p-dropdown [ngClass]="{'ng-dirty ng-invalid': form.controls['stateOrderByAdmin'].errors}"
+              (onChange)="changeState($event)" [options]="typesStatusOrder" formControlName="stateOrderByAdmin"
+              optionValue="value" optionLabel="label" placeholder="Seleccione estado" id="stateOrderByAdmin">
+            </p-dropdown>
+          </div>
+          <div class="field mb-0  col-12">
+            <label htmlFor="descriptionByAdmin">Observacion</label>
+            <textarea class="!tw-h-36 !tw-overflow-y-auto !tw-max-h-36"
+              [ngClass]="{'ng-dirty ng-invalid':form.controls['descriptionByAdmin'].errors}" pInputTextarea
+              formControlName="descriptionByAdmin" [autoResize]="true">
+          </textarea>
+          </div>
+          @if (form.controls['stateOrderByAdmin'].value === statusOrder.Send) {
+          <div class="field mb-0  col-12">
+
+            <div class="flex flex-wrap gap-3">
+              <div class="flex align-items-center">
+                <p-radioButton (onClick)="compled($event)" name="complete" value="complete"
+                  [ngModelOptions]="{standalone: true}" [(ngModel)]="valueTypeSend" inputId="complete" />
+                <label for="complete" class="ml-2">
+                  Envio Completo
+                </label>
+              </div>
+
+
+              <div class="flex align-items-center">
+                <p-radioButton (onClick)="partial($event)" name="partial" value="partial"
+                  [ngModelOptions]="{standalone: true}" [(ngModel)]="valueTypeSend" inputId="partial" />
+                <label for="partial" class="ml-2">
+                  Envio Parcial
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+          @if (valueTypeSend ==='partial') {
+          <div class="field mb-0 col-12 md:col-6">
+            <label htmlFor="totalPending">Cantidad total de faltantes</label>
+            <span class="p-input-icon-left">
+              <i class="pi pi-tag"></i>
+              <input [ngClass]="{'ng-dirty ng-invalid': form.controls['totalPending'].errors}" pInputText
+                appNumberValidator id="totalPending" formControlName="totalPending" aria-describedby="totalPending" />
+            </span>
+          </div>
+          <div class="field mb-0  col-12">
+            <label htmlFor="detailsPending">Detalle de envio parcial</label>
+            <textarea class="!tw-h-36 !tw-overflow-y-auto !tw-max-h-36"
+              [ngClass]="{'ng-dirty ng-invalid':form.controls['detailsPending'].errors}" pInputTextarea
+              formControlName="detailsPending" [autoResize]="true">
+            </textarea>
+          </div>
+          }
+          }
+        </div>
+      </form>
+    </section>
+  </article>
+  <ng-template pTemplate="footer">
+    <section class="option__butons tw-flex tw-justify-center  tw-gap-3 tw-mt-1">
+      <div class="tw-w-full">
+        <p-button styleClass="tw-w-full" label="Cancelar" [text]="true" severity="secondary"
+          (click)="cancelManagement()" />
+      </div>
+      <div class="tw-w-full">
+        <p-button [disabled]="!form.valid" styleClass="tw-w-full" label="Guardar" (click)="save()"
+          [icon]="loadingSetUpManagement ? 'pi pi-spin pi-spinner' : ''" />
+      </div>
+    </section>
+  </ng-template>
+</p-dialog>

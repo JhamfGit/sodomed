@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  sodomed-admin:
+    image: jhamfgit/sodomed-admin:latest
+    ports:
+      - "7800:80"
+    networks:
+      - vnetdocs
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  sodomed-clients:
+    image: jhamfgit/sodomed-clients:latest
+    ports:
+      - "7700:80"
+    networks:
+      - vnetdocs
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  sodomed-monolito:
+    image: jhamfgit/sodomed-monolito:latest
+    ports:
+      - "8888:8080"
+    environment:
+      - DATABASE_URL=jdbc:mysql://sodomed-db:3306/sodemed
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=sodomed_pass # Cambiar segun sea necesario
+    networks:
+      - vnetdocs
+    volumes:
+      - /mnt/docker-volumes/sodomed/image:/uploads
+    depends_on:
+      - sodomed-db
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  sodomed-db:
+    image: mysql:5.7
+    container_name: java_db_sodemed
+    environment:
+      MYSQL_DATABASE: sodemed
+      MYSQL_ROOT_PASSWORD: sodomed_pass # Cambiar segun sea necesario
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+    networks:
+      - vnetdocs
+    volumes:
+      - /mnt/docker-volumes/sodomed/bd:/var/lib/mysql
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+networks:
+  vnetdocs:
+    external: true

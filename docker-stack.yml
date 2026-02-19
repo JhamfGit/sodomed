@@ -3,52 +3,68 @@ version: '3.8'
 services:
   sodomed-admin:
     image: jhamfgit/sodomed-admin:latest
-    ports:
-      - "7800:80"
     networks:
       - vnetdocs
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sodomed-admin.rule=Host(`admindomicilios.saludmedcol.com`)"
+      - "traefik.http.routers.sodomed-admin.entrypoints=websecure"
+      - "traefik.http.routers.sodomed-admin.tls=true"
+      - "traefik.http.routers.sodomed-admin.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.sodomed-admin.loadbalancer.server.port=80"
 
   sodomed-clients:
     image: jhamfgit/sodomed-clients:latest
-    ports:
-      - "7700:80"
     networks:
       - vnetdocs
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sodomed-clients.rule=Host(`domicilios.saludmedcol.com`)"
+      - "traefik.http.routers.sodomed-clients.entrypoints=websecure"
+      - "traefik.http.routers.sodomed-clients.tls=true"
+      - "traefik.http.routers.sodomed-clients.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.sodomed-clients.loadbalancer.server.port=80"
 
   sodomed-monolito:
     image: jhamfgit/sodomed-monolito:latest
-    ports:
-      - "8888:8080"
     environment:
-      - DATABASE_URL=jdbc:mysql://sodomed-db:3306/sodemed
+      - DATABASE_URL=jdbc:mysql://java_db_sodemed:3306/sodemed
       - DATABASE_USERNAME=root
-      - DATABASE_PASSWORD=sodomed_pass # Cambiar segun sea necesario
+      - DATABASE_PASSWORD=
     networks:
       - vnetdocs
     volumes:
       - /mnt/docker-volumes/sodomed/image:/uploads
-    depends_on:
-      - sodomed-db
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sodomed-monolito-clients.rule=Host(`domicilios.saludmedcol.com`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.sodomed-monolito-clients.entrypoints=websecure"
+      - "traefik.http.routers.sodomed-monolito-clients.tls=true"
+      - "traefik.http.routers.sodomed-monolito-clients.tls.certresolver=letsencryptresolver"
+      - "traefik.http.routers.sodomed-monolito-admin.rule=Host(`admindomicilios.saludmedcol.com`) && PathPrefix(`/api`)"
+      - "traefik.http.routers.sodomed-monolito-admin.entrypoints=websecure"
+      - "traefik.http.routers.sodomed-monolito-admin.tls=true"
+      - "traefik.http.routers.sodomed-monolito-admin.tls.certresolver=letsencryptresolver"
+      - "traefik.http.services.sodomed-monolito.loadbalancer.server.port=8080"
 
-  sodomed-db:
+  java_db_sodemed:
     image: mysql:5.7
-    container_name: java_db_sodemed
     environment:
       MYSQL_DATABASE: sodemed
-      MYSQL_ROOT_PASSWORD: sodomed_pass # Cambiar segun sea necesario
-      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     networks:
       - vnetdocs
     volumes:

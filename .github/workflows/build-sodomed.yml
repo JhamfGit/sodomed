@@ -8,6 +8,8 @@ on:
       - 'portal-admin-sodemed-develop/portal-admin-sodemed-develop/**'
       - 'portal-clients-sodemed-develop/portal-clients-sodemed-develop/**'
       - 'sodemed-monolito-develop/sodemed-monolito-develop/**'
+      - 'docker-stack.yml'
+  workflow_dispatch:
 
 jobs:
   build-admin:

@@ -13,7 +13,7 @@ on:
 
 jobs:
   build-admin:
-    if: contains(github.event.head_commit.modified, 'portal-admin-sodemed-develop') || github.run_number == 1
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.modified, 'portal-admin-sodemed-develop') || github.run_number <= 5
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -32,7 +32,7 @@ jobs:
           tags: jhamfgit/sodomed-admin:latest
 
   build-clients:
-    if: contains(github.event.head_commit.modified, 'portal-clients-sodemed-develop') || github.run_number == 1
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.modified, 'portal-clients-sodemed-develop') || github.run_number <= 5
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -51,7 +51,7 @@ jobs:
           tags: jhamfgit/sodomed-clients:latest
 
   build-monolito:
-    if: contains(github.event.head_commit.modified, 'sodemed-monolito-develop') || github.run_number == 1
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.modified, 'sodemed-monolito-develop') || github.run_number <= 5
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
